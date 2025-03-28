@@ -6,6 +6,8 @@ import Review from "./pages/Review";
 import Footer from "./Components/Footer";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
+import Login from './auth/Login';
+import Register from './auth/Register';
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <Route path="/wisata" element={<Wisata />} />
         <Route path="/budaya" element={<Budaya />} />
         <Route path="/review" element={<Review />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
