@@ -4,7 +4,8 @@ import Wisata from "./pages/Wisata";
 import Budaya from "./pages/Budaya";
 import Review from "./pages/Review";
 import NotFound from "./pages/NotFound";
-import Navbar from "./Components/Navbar";
+import Navbar from "./components/Navbar";
+
 function App() {
   return (
     <Router>
@@ -16,6 +17,7 @@ function App() {
         <Route path="/review" element={<Review />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }
