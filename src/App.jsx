@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Wisata from "./pages/Wisata";
 import Budaya from "./pages/Budaya";
 import Review from "./pages/Review";
+import Footer from "./Components/Footer";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 
