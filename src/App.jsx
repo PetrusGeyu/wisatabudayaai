@@ -4,8 +4,7 @@ import Wisata from "./pages/Wisata";
 import Budaya from "./pages/Budaya";
 import Review from "./pages/Review";
 import NotFound from "./pages/NotFound";
-import Navbar from "./components/Navbar";
-
+import Navbar from "./Components/Navbar";
 function App() {
   return (
     <Router>
