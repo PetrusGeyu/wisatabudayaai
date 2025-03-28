@@ -1,8 +1,16 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import API from "../services/api";
 import { useNavigate } from "react-router-dom"; 
 
 const Register = () => {
+  useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+          // Jika tidak ada token, redirect ke login
+          navigate("/");
+        }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []);
   const [form, setForm] = useState({
     name: "",
     email: "",
