@@ -1,46 +1,57 @@
-import React, { useState } from "react";
-import { useNavigate,Link } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // pastikan pakai react-router-dom v6+
+import API from "../services/api";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-    // Contoh login dummy, ganti dengan API-mu
-    if (email === "user@example.com" && password === "password") {
-      localStorage.setItem("token", "fake-jwt-token");
-      navigate("/");
-    } else {
-      alert("Login gagal");
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      const res = await API.post("auth/login", form); // jika baseURL sudah diset di API.js
+      localStorage.setItem("token", res.data.token);
+      alert("Login berhasil!");
+      navigate("/"); // redirect ke halaman dashboard
+    } catch (err) {
+      setError(err.response?.data?.message || "Terjadi kesalahan");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Login</h2>
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          placeholder="Email"
-          className="block mb-2 p-2 border"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className="block mb-2 p-2 border"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button className="bg-blue-500 text-white px-4 py-2">Login</button>
-      </form>
-      <p>Belum punya akun? <Link to="/register" className="text-blue-500">Daftar di sini</Link></p>
-
-    </div>
+    <form onSubmit={handleLogin}>
+      <input
+        name="email"
+        placeholder="Email"
+        type="email"
+        onChange={handleChange}
+        value={form.email}
+        required
+      />
+      <input
+        name="password"
+        placeholder="Password"
+        type="password"
+        onChange={handleChange}
+        value={form.password}
+        required
+      />
+      <button type="submit" disabled={loading}>
+        {loading ? "Logging in..." : "Login"}
+      </button>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+    </form>
   );
 };
 
