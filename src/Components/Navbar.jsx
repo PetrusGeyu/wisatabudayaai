@@ -52,8 +52,8 @@ const Navbar = () => {
                 </div>
               </div>
               <hr />
-              <Link to="#"><FaUser className="icon"/> Profile</Link>
-              <Link to="#"><FaBookmark className="icon"/> Bookmark</Link>
+              <Link to={'/user'}><FaUser className="icon"/> Profile</Link>
+              <Link to={'/bookmark'}><FaBookmark className="icon"/> Bookmark</Link>
               <button className="logout-button" onClick={handleLogout}><FaSignOutAlt className="icon"/> Log Out</button>
             </div>
           )}

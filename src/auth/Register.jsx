@@ -27,7 +27,7 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     setErrors({});
-    
+
     // Validasi manual
     if (!form.name || !form.email || !form.password || !form.checkPassword) {
       setErrors({ form: "Semua kolom harus diisi!" });
@@ -51,9 +51,10 @@ const Register = () => {
         email: form.email,
         password: form.password,
       });
-
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("email", res.data.email);
+      localStorage.setItem("email", res.data.user.email);
+      localStorage.setItem("user_id", res.data.user.id);
+      localStorage.setItem("name", res.data.user.name);
 
       alert("Registrasi berhasil!");
       navigate("/");
@@ -174,4 +175,3 @@ const styles = {
 };
 
 export default Register;
-

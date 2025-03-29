@@ -8,6 +8,8 @@ import NotFound from "./pages/NotFound";
 import Navbar from "./Components/Navbar";
 import Login from "./auth/Login";
 import Register from "./auth/register";
+import UserProfile from "./pages/UserProfile";
+import Bookmark from "./pages/Bookmark";
 
 function Layout() {
   const location = useLocation();
@@ -24,6 +26,8 @@ function Layout() {
           <Route path="/review" element={<Review />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/user" element={<UserProfile />} />
+          <Route path="/bookmark" element={<Bookmark />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

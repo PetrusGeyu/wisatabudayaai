@@ -38,6 +38,15 @@ const styles = {
     color: "red",
     fontSize: "16px",
   },
+  button: {
+    marginTop: "10px",
+    padding: "8px 12px",
+    backgroundColor: "#007bff",
+    color: "#fff",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+  },
 };
 
 const Wisata = () => {
@@ -64,6 +73,46 @@ const Wisata = () => {
       });
   }, []);
 
+  const handleBookmark = (item) => {
+    const token = localStorage.getItem("token");
+  
+    fetch("http://localhost:8000/api/wisata", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        nama: item["Nama Tempat Wisata"],
+        kota: item.Kota,
+        jenis: item["Jenis Wisata"],
+        rating: item.Rating,
+        deskripsi: item["Deskripsi Singkat"],
+        user_id : localStorage.getItem('user_id')
+      }),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Gagal menyimpan bookmark!");
+        return res.json();
+      })
+      .then((resData) => {
+        alert("Berhasil ditambahkan ke bookmark!");
+        console.log("Response:", resData);
+  
+        // Hapus item dari list data
+        setData((prevData) =>
+          prevData.filter(
+            (d) => d["Nama Tempat Wisata"] !== item["Nama Tempat Wisata"]
+          )
+        );
+      })
+      .catch((err) => {
+        console.error("Error saat menyimpan bookmark:", err);
+        alert("Gagal menambahkan ke bookmark.");
+      });
+  };
+  
+
   return (
     <div style={styles.container}>
       <h1 style={styles.heading}>Rekomendasi Wisata</h1>
@@ -78,6 +127,9 @@ const Wisata = () => {
               <div style={styles.detail}><strong>Jenis:</strong> {item["Jenis Wisata"]}</div>
               <div style={styles.detail}><strong>Rating:</strong> {item.Rating} ⭐</div>
               <div style={styles.detail}><strong>Deskripsi:</strong> {item["Deskripsi Singkat"]}</div>
+              <button style={styles.button} onClick={() => handleBookmark(item)}>
+                Bookmark
+              </button>
             </div>
           ))}
         </div>

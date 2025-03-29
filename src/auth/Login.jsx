@@ -74,7 +74,11 @@ const Login = () => {
     try {
       const res = await API.post("auth/login", form);
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("email", res.data.email);
+      localStorage.setItem("email", res.data.user.email);
+      localStorage.setItem("user_id", res.data.user.id);
+      localStorage.setItem("name", res.data.user.name);
+
+      
 
       alert("Login berhasil!");
       navigate("/");
