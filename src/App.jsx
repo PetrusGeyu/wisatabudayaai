@@ -1,18 +1,27 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import Wisata from "./pages/Wisata";
 import Budaya from "./pages/Budaya";
 import Review from "./pages/Review";
 import Footer from "./Components/Footer";
 import NotFound from "./pages/NotFound";
+<<<<<<< HEAD
 import Navbar from "./components/Navbar";
 import Login from './auth/Login';
 import Register from './auth/register.jsx';
+=======
+import Navbar from "./Components/Navbar";
+import Login from "./auth/Login";
+import Register from "./auth/Register";
 
-function App() {
+function Layout() {
+  const location = useLocation();
+  const hideLayout = location.pathname === "/login" || location.pathname === "/register"; // Cek jika halaman Login/Register
+>>>>>>> 73ae815f9fce68c599ce824360e670a25b8c014b
+
   return (
-    <Router>
-      <Navbar />
+    <>
+      {!hideLayout && <Navbar />} {/* Sembunyikan Navbar di halaman Login/Register */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/wisata" element={<Wisata />} />
@@ -22,7 +31,15 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <Footer />
+      {!hideLayout && <Footer />} {/* Sembunyikan Footer di halaman Login/Register */}
+    </>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Layout />
     </Router>
   );
 }
