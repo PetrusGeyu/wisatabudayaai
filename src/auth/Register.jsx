@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import API from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
-
+import './auth.css'
 const Register = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -53,7 +53,8 @@ const Register = () => {
       });
 
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("userName", res.data.name);
+      localStorage.setItem("email", res.data.email);
+
       alert("Registrasi berhasil!");
       navigate("/");
     } catch (err) {

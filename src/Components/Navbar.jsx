@@ -8,7 +8,7 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
-  const userName = localStorage.getItem("userName") || "Pengguna";
+  const userName = localStorage.getItem("email") || "Pengguna";
 
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
@@ -16,7 +16,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("userName");
+    localStorage.removeItem("name");
     navigate("/login");
   };
 

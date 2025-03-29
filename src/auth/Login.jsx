@@ -1,21 +1,66 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // pastikan pakai react-router-dom v6+
+import { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import API from "../services/api";
-import React, { useEffect } from "react";
+
+const styles = {
+  container: {
+    display: "flex",
+    justifyContent: "center",
+    marginTop: "50px",
+  },
+  form: {
+    width: "100%",
+    maxWidth: "400px",
+    padding: "20px",
+    border: "1px solid #ccc",
+    borderRadius: "8px",
+    backgroundColor: "#fafafa",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+  },
+  title: {
+    textAlign: "center",
+    marginBottom: "20px",
+  },
+  input: {
+    width: "100%",
+    padding: "10px",
+    marginBottom: "10px",
+    borderRadius: "5px",
+    border: "1px solid #ccc",
+  },
+  button: {
+    width: "100%",
+    padding: "10px",
+    backgroundColor: "#4CAF50",
+    color: "white",
+    fontWeight: "bold",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+  },
+  error: {
+    color: "red",
+    fontSize: "0.875rem",
+    marginBottom: "10px",
+  },
+  linkText: {
+    textAlign: "center",
+    marginTop: "15px",
+  },
+};
+
 const Login = () => {
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-   
-    if (token) {
-      // Jika tidak ada token, redirect ke login
-      navigate("/");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -27,11 +72,12 @@ const Login = () => {
     setError("");
 
     try {
-      const res = await API.post("auth/login", form); // jika baseURL sudah diset di API.js
+      const res = await API.post("auth/login", form);
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("userName", res.data.name);
+      localStorage.setItem("email", res.data.email);
+
       alert("Login berhasil!");
-      navigate("/"); // redirect ke halaman dashboard
+      navigate("/");
     } catch (err) {
       setError(err.response?.data?.message || "Terjadi kesalahan");
     } finally {
@@ -40,28 +86,36 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleLogin}>
-      <input
-        name="email"
-        placeholder="Email"
-        type="email"
-        onChange={handleChange}
-        value={form.email}
-        required
-      />
-      <input
-        name="password"
-        placeholder="Password"
-        type="password"
-        onChange={handleChange}
-        value={form.password}
-        required
-      />
-      <button type="submit" disabled={loading}>
-        {loading ? "Logging in..." : "Login"}
-      </button>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-    </form>
+    <div style={styles.container}>
+      <form onSubmit={handleLogin} style={styles.form}>
+        <h2 style={styles.title}>Login</h2>
+        {error && <p style={styles.error}>{error}</p>}
+        <input
+          style={styles.input}
+          name="email"
+          placeholder="Email"
+          type="email"
+          onChange={handleChange}
+          value={form.email}
+          required
+        />
+        <input
+          style={styles.input}
+          name="password"
+          placeholder="Password"
+          type="password"
+          onChange={handleChange}
+          value={form.password}
+          required
+        />
+        <button style={styles.button} type="submit" disabled={loading}>
+          {loading ? "Logging in..." : "Login"}
+        </button>
+        <p style={styles.linkText}>
+          Belum punya akun? <Link to="/register">Ayo buat</Link>
+        </p>
+      </form>
+    </div>
   );
 };
 
