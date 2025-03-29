@@ -1,10 +1,13 @@
-import React from 'react'
+import React from 'react';
 import "./Footer.css";
 
 const Footer = () => {
   return (
-    <footer>
-      <p>&copy; 2025 Wisata Budaya AI. All rights reserved.</p>
+    <footer className="footer">
+      <div className="footer-container">
+        <p>&copy; 2025 WisataBudaya AI. All rights reserved.</p>
+        <p className="footer-subtext">Made with ❤️ for Indonesia's culture</p>
+      </div>
     </footer>
   );
 };
