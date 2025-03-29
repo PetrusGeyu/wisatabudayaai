@@ -7,7 +7,7 @@ import Footer from "./Components/Footer";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 import Login from './auth/Login';
-import Register from './auth/Register';
+import Register from './auth/register.jsx';
 
 function App() {
   return (
