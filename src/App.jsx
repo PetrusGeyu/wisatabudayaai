@@ -5,11 +5,6 @@ import Budaya from "./pages/Budaya";
 import Review from "./pages/Review";
 import Footer from "./Components/Footer";
 import NotFound from "./pages/NotFound";
-<<<<<<< HEAD
-import Navbar from "./components/Navbar";
-import Login from './auth/Login';
-import Register from './auth/register.jsx';
-=======
 import Navbar from "./Components/Navbar";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
@@ -17,7 +12,6 @@ import Register from "./auth/Register";
 function Layout() {
   const location = useLocation();
   const hideLayout = location.pathname === "/login" || location.pathname === "/register"; // Cek jika halaman Login/Register
->>>>>>> 73ae815f9fce68c599ce824360e670a25b8c014b
 
   return (
     <>
