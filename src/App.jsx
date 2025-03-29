@@ -7,7 +7,7 @@ import Footer from "./Components/Footer";
 import NotFound from "./pages/NotFound";
 import Navbar from "./Components/Navbar";
 import Login from "./auth/Login";
-import Register from "./auth/register"; // Capitalize untuk konsistensi
+import Register from "./auth/register";
 
 function Layout() {
   const location = useLocation();

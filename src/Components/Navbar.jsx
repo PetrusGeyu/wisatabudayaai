@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './navbar.css';
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle, FaUser, FaBookmark, FaSignOutAlt } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
@@ -8,15 +8,18 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
-  const userName = localStorage.getItem("email") || "Pengguna";
+  const userName = localStorage.getItem("name") || "Pengguna";
+  const userEmail = localStorage.getItem("email") || "youremail@gmail.com";
 
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
   };
 
-  const handleLogout = () => {
+  const handleLogout = (e) => {
+    e.stopPropagation(); 
     localStorage.removeItem("token");
     localStorage.removeItem("name");
+    localStorage.removeItem("email");
     navigate("/login");
   };
 
@@ -37,14 +40,21 @@ const Navbar = () => {
         <li><Link to='/'>Beranda</Link></li>
         <li><Link to='/wisata'>Wisata</Link></li>
         <li><Link to='/budaya'>Budaya</Link></li>
-        <div className='profile-wrapper' ref={dropdownRef}>
-          <div className='profile-icon' onClick={toggleDropdown}>
-            <FaUserCircle />
-          </div>
+        <div className='profile-container' ref={dropdownRef} onClick={toggleDropdown}>
+          <div className='profile-icon'><FaUserCircle /></div>
           {dropdownOpen && (
             <div className='dropdown-menu'>
-              <p className='user-name'>{userName}</p>
-              <button className='logout-button' onClick={handleLogout}>Logout</button>
+              <div className='dropdown-header'>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTe41NOE7Eu1ezH1o_0dHiFy7VCQmvlAASYrw&s" alt="User Avatar" className="avatar"/>
+                <div>
+                  <p className="username">{userName}</p>
+                  <p className="email">{userEmail}</p>
+                </div>
+              </div>
+              <hr />
+              <Link to="#"><FaUser className="icon"/> Profile</Link>
+              <Link to="#"><FaBookmark className="icon"/> Bookmark</Link>
+              <button className="logout-button" onClick={handleLogout}><FaSignOutAlt className="icon"/> Log Out</button>
             </div>
           )}
         </div>
