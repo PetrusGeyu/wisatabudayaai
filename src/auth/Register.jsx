@@ -53,6 +53,7 @@ const Register = () => {
       });
 
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("userName", res.data.name);
       alert("Registrasi berhasil!");
       navigate("/");
     } catch (err) {

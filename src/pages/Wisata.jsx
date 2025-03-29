@@ -5,7 +5,7 @@ const Wisata = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("https://dadb-34-91-9-190.ngrok-free.app/rekomendasi", {
+    fetch("https://4faa-34-91-9-190.ngrok-free.app/rekomendasi", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

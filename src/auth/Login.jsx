@@ -29,6 +29,7 @@ const Login = () => {
     try {
       const res = await API.post("auth/login", form); // jika baseURL sudah diset di API.js
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("userName", res.data.name);
       alert("Login berhasil!");
       navigate("/"); // redirect ke halaman dashboard
     } catch (err) {
