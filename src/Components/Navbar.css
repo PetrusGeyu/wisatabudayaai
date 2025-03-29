@@ -1,130 +1,123 @@
 nav {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #4098da;
-  padding: 15px 20px;
-  font-family: Arial, sans-serif;
-  font-weight: bold;
-  font-size: 24px;
+  background-color: rgba(64, 152, 218, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 0.75rem 1.5rem;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
 }
-
 
 .logo {
-  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
-.profile-icon {
-  color: white;
-  font-size: 30px;
+.hamburger {
+  display: none;
+  font-size: 1.5rem;
   cursor: pointer;
-  display: flex;
-  align-items: center;
+  z-index: 1001;
+  color: white;
 }
 
 .nav-links {
-  list-style: none;
   display: flex;
+  list-style: none;
+  gap: 1.5rem;
   align-items: center;
-  gap: 40px;
-}
-
-.nav-links li {
-  display: inline;
 }
 
 .nav-links li a {
-  color: white;
   text-decoration: none;
-  font-size: 16px;
+  color: white;
+  transition: color 0.3s ease;
 }
 
 .nav-links li a:hover {
-  text-decoration: underline;
+  color: black;
 }
 
 .profile-container {
   position: relative;
-  display: flex;
-  align-items: center;
   cursor: pointer;
+}
+
+.profile-icon {
+  font-size: 1.5rem;
+  color: white;
 }
 
 .dropdown-menu {
   position: absolute;
-  top: 50px;
+  top: 3.2rem;
   right: 0;
-  background: #4098da;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  width: 200px;
-  padding: 10px;
-  z-index: 10;
+  background-color: #4098DA;
   color: white;
+  width: 240px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.profile-container:hover .dropdown-menu,
+.profile-container:focus-within .dropdown-menu {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .dropdown-header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: #4098DA;
 }
 
 .avatar {
-  width: 30px;
-  height: 30px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  background: white;
+  margin-right: 0.75rem;
+  object-fit: cover;
 }
 
 .username {
-  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  color: white;
+  font-size: 1rem;
 }
 
 .email {
-  font-size: 11px;
-}
-
-hr {
-  border: 0;
-  height: 1px;
-  background: white;
-  margin: 10px 0;
-  opacity: 0.5;
-}
-
-.dropdown-menu a {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px;
-  text-decoration: none;
+  font-size: 0.875rem;
+  margin: 0;
   color: white;
-  font-size: 14px;
-  transition: 0.3s;
-}
-
-.dropdown-menu a:hover {
-  background: white;
-  color: #4098da;
-  border-radius: 5px;
 }
 
 .dropdown-menu a,
-.dropdown-menu .logout-button {
+.logout-button {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px;
+  padding: 0.75rem 1rem;
   text-decoration: none;
   color: white;
-  font-size: 14px;
-  transition: 0.3s;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease;
+}
+
+.logout-button {
   background: none;
   border: none;
   width: 100%;
@@ -133,16 +126,43 @@ hr {
 }
 
 .dropdown-menu a:hover,
-.dropdown-menu .logout-button:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 5px;
-}
-
-.logout-button {
-  justify-content: flex-start;
-  color: white;
-}
-
 .logout-button:hover {
-  color: #4098da;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    flex-direction: column;
+    width: 100%;
+    background-color: #4098DA;
+    display: none;
+    padding: 1rem 0;
+    z-index: 999;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .nav-links li {
+    margin: 0.5rem 0;
+    text-align: center;
+  }
+
+  .profile-container {
+    align-self: center;
+  }
+
+  .dropdown-menu {
+    right: 10px;
+    top: 4rem;
+  }
 }
