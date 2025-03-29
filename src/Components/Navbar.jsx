@@ -8,9 +8,9 @@ const Navbar = () => {
     <nav>
       <div className='logo'><a href="">WisataBudaya</a></div>
       <ul className='nav-links'>
-        <li><Link to='/'>Beranda</Link></li>
+        <li><Link to={'/'}>Beranda</Link></li>
         <li><Link to={'/wisata'}>Wisata</Link></li>
-        <li><a href="#">Budaya</a></li>
+        <li><Link to={'/budaya'}>Budaya</Link></li>
         <div className='profile-icon'><FaUserCircle /></div>
       </ul>
     </nav>
