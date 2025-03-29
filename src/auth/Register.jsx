@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import API from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
-import './auth.css'
+
 const Register = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -174,3 +174,4 @@ const styles = {
 };
 
 export default Register;
+

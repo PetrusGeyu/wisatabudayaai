@@ -10,11 +10,11 @@ nav {
 }
 
 .logo {
- color: white;
+  color: white;
 }
 
 .profile-icon {
-  color: white; 
+  color: white;
   font-size: 30px;
   cursor: pointer;
   display: flex;
@@ -42,41 +42,103 @@ nav {
   text-decoration: underline;
 }
 
-.profile-wrapper {
+.profile-container {
   position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 
 .dropdown-menu {
   position: absolute;
-  top: 60px;
-  right: 20px;
-  background-color: white;
-  color: #333;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  padding: 10px 15px;
-  min-width: 160px;
-  z-index: 999;
+  top: 50px;
+  right: 0;
+  background: #4098da;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  padding: 10px;
+  z-index: 10;
+  color: white;
 }
 
-.user-name {
-  font-weight: bold;
-  margin-bottom: 10px;
+.dropdown-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: white;
+}
+
+.username {
   font-size: 14px;
+}
+
+.email {
+  font-size: 11px;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background: white;
+  margin: 10px 0;
+  opacity: 0.5;
+}
+
+.dropdown-menu a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  text-decoration: none;
+  color: white;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.dropdown-menu a:hover {
+  background: white;
+  color: #4098da;
+  border-radius: 5px;
+}
+
+.dropdown-menu a,
+.dropdown-menu .logout-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  text-decoration: none;
+  color: white;
+  font-size: 14px;
+  transition: 0.3s;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu .logout-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
 }
 
 .logout-button {
-  background-color: #e74c3c;
+  justify-content: flex-start;
   color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  width: 100%;
 }
 
 .logout-button:hover {
-  background-color: #c0392b;
+  color: #4098da;
 }
