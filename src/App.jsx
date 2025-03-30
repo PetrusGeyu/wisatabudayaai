@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import Wisata from "./pages/Wisata";
 import Budaya from "./pages/Budaya";
@@ -13,10 +18,13 @@ import Bookmark from "./pages/Bookmark";
 
 function Layout() {
   const location = useLocation();
-  const hideLayout = location.pathname === "/login" || location.pathname === "/register";
+  const hideLayout =
+    location.pathname === "/login" || location.pathname === "/register";
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+    <div
+      style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
+    >
       {!hideLayout && <Navbar />}
       <main style={{ flex: 1 }}>
         <Routes>
