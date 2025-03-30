@@ -1,11 +1,21 @@
-footer {
-    background: #4098da;
-    color: white;
-    text-align: center;
-    padding: 15px;
-    font-size: 14px;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    font-family: Arial, sans-serif;
-  }
+.footer {
+  background: #4098da;
+  color: white;
+  text-align: center;
+  padding: 20px 10px;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  margin-top: auto;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-subtext {
+  font-size: 12px;
+  margin-top: 5px;
+  color: #f0f0f0;
+}
