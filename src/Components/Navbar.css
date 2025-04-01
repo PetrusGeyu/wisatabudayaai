@@ -57,7 +57,7 @@ nav {
   position: absolute;
   top: 3.2rem;
   right: 0;
-  background-color: #4098DA;
+  background-color: rgba(64, 152, 218, 0.8);
   color: white;
   width: 240px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -81,7 +81,7 @@ nav {
   align-items: center;
   padding: 1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  background-color: #4098DA;
+  background-color: rgba(64, 152, 218, 0.8);
 }
 
 .avatar {
@@ -142,7 +142,7 @@ nav {
     left: 0;
     flex-direction: column;
     width: 100%;
-    background-color: #4098DA;
+    background-color: rgba(64, 152, 218, 0.8);
     display: none;
     padding: 1rem 0;
     z-index: 999;
