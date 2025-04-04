@@ -1,8 +1,9 @@
 import React from 'react'
+import BatikPredictor from '../Components/BatikDetector'
 
 const Budaya = () => {
   return (
-    <div>Budaya</div>
+   <BatikPredictor/>
   )
 }
 
