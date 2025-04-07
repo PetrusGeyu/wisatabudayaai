@@ -90,41 +90,36 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setLoading(true);
     setErrors({});
 
     if (!form.name || !form.email || !form.password || !form.checkPassword) {
       setErrors({ form: "Semua kolom harus diisi!" });
+      setLoading(false);
       return;
     }
 
     if (form.password.length < 6) {
       setErrors({ password: "Password minimal 6 karakter" });
+      setLoading(false);
       return;
     }
 
     if (form.password !== form.checkPassword) {
       setErrors({ checkPassword: "Password tidak cocok" });
+      setLoading(false);
       return;
     }
 
     try {
-      setLoading(true);
-      const res = await API.post("/auth/register", {
+      await API.post("/auth/register", {
         name: form.name,
         email: form.email,
         password: form.password,
       });
-      await Promise.all([
-        localStorage.setItem("token", res.data.token),
-        localStorage.setItem("email", res.data.user.email),
-        localStorage.setItem("user_id", res.data.user.id),
-        localStorage.setItem("name", res.data.user.name),
-      ]);
-      
-      alert("Registrasi berhasil!");
-      window.location.href = "/";
-      
-      
+
+      alert("Registrasi berhasil! Silakan login.");
+      navigate("/login");
     } catch (err) {
       const message = err.response?.data?.message || "Terjadi kesalahan";
       setErrors({ form: message });
