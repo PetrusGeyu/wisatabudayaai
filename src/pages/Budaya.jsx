@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import BatikDetector from "../Components/BatikDetector";
 
 const styles = {
   container: {
@@ -79,10 +80,21 @@ const ITEMS_PER_PAGE = 6;
 
 const Budaya = () => {
   const [data, setData] = useState([]);
-  const [search, setSearch] = useState("");
+  const [selectedKota, setSelectedKota] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const kotaList = [
+    "Madura",
+    "Jombang",
+    "Semarang",
+    "Subang",
+    "Banyumas",
+    "Ponorogo",
+    "Surakarta",
+    "Kuningan",
+  ];
 
   useEffect(() => {
     const fetchBudaya = async () => {
@@ -137,8 +149,6 @@ const Budaya = () => {
       if (!res.ok) throw new Error("Gagal menyimpan bookmark!");
 
       alert("Berhasil ditambahkan ke bookmark!");
-
-      // Hapus dari tampilan setelah bookmark
       setData((prevData) =>
         prevData.filter(
           (d) => d["Nama Tempat Wisata"] !== item["Nama Tempat Wisata"]
@@ -150,9 +160,9 @@ const Budaya = () => {
     }
   };
 
-  const filteredData = data.filter((item) =>
-    item.Budaya?.toLowerCase().includes(search.trim().toLowerCase())
-  );
+  const filteredData = selectedKota
+    ? data.filter((item) => item.Kota === selectedKota)
+    : data;
 
   const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -177,16 +187,21 @@ const Budaya = () => {
     <div style={styles.container}>
       <h1 style={styles.heading}>Budaya</h1>
 
-      <input
-        type="text"
-        placeholder="Cari tempat wisata..."
+      <select
         style={styles.searchInput}
-        value={search}
+        value={selectedKota}
         onChange={(e) => {
-          setSearch(e.target.value);
+          setSelectedKota(e.target.value);
           setCurrentPage(1);
         }}
-      />
+      >
+        <option value="">-- Pilih Kota --</option>
+        {kotaList.map((kota, idx) => (
+          <option key={idx} value={kota}>
+            {kota}
+          </option>
+        ))}
+      </select>
 
       {error ? (
         <p style={styles.error}>{error}</p>
@@ -220,7 +235,6 @@ const Budaya = () => {
             ))}
           </div>
 
-          {/* Pagination */}
           <div style={styles.pagination}>
             <button
               style={styles.pageButton}

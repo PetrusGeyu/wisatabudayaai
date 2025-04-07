@@ -51,13 +51,17 @@ const Register = () => {
         email: form.email,
         password: form.password,
       });
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("email", res.data.user.email);
-      localStorage.setItem("user_id", res.data.user.id);
-      localStorage.setItem("name", res.data.user.name);
-
+      await Promise.all([
+        localStorage.setItem("token", res.data.token),
+        localStorage.setItem("email", res.data.user.email),
+        localStorage.setItem("user_id", res.data.user.id),
+        localStorage.setItem("name", res.data.user.name),
+      ]);
+      
       alert("Registrasi berhasil!");
-      navigate("/");
+      window.location.href = "/";
+      
+      
     } catch (err) {
       const message = err.response?.data?.message || "Terjadi kesalahan";
       setErrors({ form: message });
