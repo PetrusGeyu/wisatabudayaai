@@ -76,11 +76,21 @@ const styles = {
 };
 
 const ITEMS_PER_PAGE = 6;
+const kotaList = [
+  "Bandung",
+  "Makassar",
+  "Yogyakarta",
+  "Bali",
+  "Aceh",
+  "Surabaya",
+  "Banjarmasin",
+  "Jakarta",
+];
 
 const Wisata = () => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
-  const [search, setSearch] = useState("");
+  const [selectedKota, setSelectedKota] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -128,8 +138,6 @@ const Wisata = () => {
       .then((resData) => {
         alert("Berhasil ditambahkan ke bookmark!");
         console.log("Response:", resData);
-
-        // Hapus dari data yang tampil
         setData((prevData) =>
           prevData.filter(
             (d) => d["Nama Tempat Wisata"] !== item["Nama Tempat Wisata"]
@@ -143,20 +151,15 @@ const Wisata = () => {
   };
 
   const filteredData = data.filter((item) =>
-    item["Nama Tempat Wisata"]
-      .toLowerCase()
-      .includes(search.trim().toLowerCase())
+    selectedKota ? item.Kota.toLowerCase() === selectedKota.toLowerCase() : true
   );
 
   const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const currentItems = filteredData.slice(
-    startIndex,
-    startIndex + ITEMS_PER_PAGE
-  );
+  const currentItems = filteredData.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
   const getPageNumbers = () => {
-    const maxVisible = 5; // jumlah maksimum tombol yang ditampilkan
+    const maxVisible = 5;
     let start = Math.max(currentPage - 2, 1);
     let end = Math.min(currentPage + 2, totalPages);
 
@@ -177,16 +180,21 @@ const Wisata = () => {
     <div style={styles.container}>
       <h1 style={styles.heading}>Rekomendasi Wisata</h1>
 
-      <input
-        type="text"
-        placeholder="Cari tempat wisata..."
+      <select
         style={styles.searchInput}
-        value={search}
+        value={selectedKota}
         onChange={(e) => {
-          setSearch(e.target.value);
+          setSelectedKota(e.target.value);
           setCurrentPage(1);
         }}
-      />
+      >
+        <option value="">-- Pilih Kota --</option>
+        {kotaList.map((kota, i) => (
+          <option key={i} value={kota}>
+            {kota}
+          </option>
+        ))}
+      </select>
 
       {error ? (
         <p style={styles.error}>{error}</p>
@@ -208,10 +216,7 @@ const Wisata = () => {
                 <div style={styles.detail}>
                   <strong>Deskripsi:</strong> {item["Deskripsi Singkat"]}
                 </div>
-                <button
-                  style={styles.button}
-                  onClick={() => handleBookmark(item)}
-                >
+                <button style={styles.button} onClick={() => handleBookmark(item)}>
                   Bookmark
                 </button>
               </div>
@@ -220,25 +225,16 @@ const Wisata = () => {
 
           <div style={styles.pagination}>
             {currentPage > 1 && (
-              <button
-                style={styles.pageButton}
-                onClick={() => setCurrentPage(currentPage - 1)}
-              >
+              <button style={styles.pageButton} onClick={() => setCurrentPage(currentPage - 1)}>
                 Prev
               </button>
             )}
-
             {currentPage > 3 && (
-              <button
-                style={styles.pageButton}
-                onClick={() => setCurrentPage(1)}
-              >
+              <button style={styles.pageButton} onClick={() => setCurrentPage(1)}>
                 1
               </button>
             )}
-
             {currentPage > 4 && <span>...</span>}
-
             {getPageNumbers().map((page) => (
               <button
                 key={page}
@@ -251,23 +247,14 @@ const Wisata = () => {
                 {page}
               </button>
             ))}
-
             {currentPage < totalPages - 3 && <span>...</span>}
-
             {currentPage < totalPages - 2 && (
-              <button
-                style={styles.pageButton}
-                onClick={() => setCurrentPage(totalPages)}
-              >
+              <button style={styles.pageButton} onClick={() => setCurrentPage(totalPages)}>
                 {totalPages}
               </button>
             )}
-
             {currentPage < totalPages && (
-              <button
-                style={styles.pageButton}
-                onClick={() => setCurrentPage(currentPage + 1)}
-              >
+              <button style={styles.pageButton} onClick={() => setCurrentPage(currentPage + 1)}>
                 Next
               </button>
             )}
