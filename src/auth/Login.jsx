@@ -15,24 +15,29 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fff",
+    padding: "20px",
   },
   right: {
     flex: 1,
-    backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(${bgImage})`,
+    backgroundImage: `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url(${bgImage})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
   },
   form: {
     width: "100%",
-    maxWidth: "320px",
+    maxWidth: "400px",
+    padding: "30px",
+    borderRadius: "16px",
+    backgroundColor: "#fff",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
     display: "flex",
     flexDirection: "column",
-    gap: "16px",
+    gap: "14px",
   },
   title: {
     fontSize: "24px",
     fontWeight: "bold",
-    marginBottom: "8px",
+    marginBottom: "10px",
     textAlign: "center",
   },
   input: {
@@ -50,31 +55,14 @@ const styles = {
     borderRadius: "6px",
     cursor: "pointer",
   },
-  googleButton: {
-    padding: "10px",
-    border: "1px solid #ccc",
-    borderRadius: "6px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: "8px",
-    cursor: "pointer",
-    backgroundColor: "#fff",
-  },
-  linkText: {
-    textAlign: "center",
-    fontSize: "14px",
-  },
   error: {
     color: "red",
     fontSize: "0.875rem",
     textAlign: "center",
   },
-  forgotPassword: {
-    fontSize: "12px",
-    textAlign: "right",
-    color: "#1a73e8",
-    textDecoration: "none",
+  linkText: {
+    textAlign: "center",
+    fontSize: "14px",
   },
 };
 
@@ -121,7 +109,9 @@ const Login = () => {
       <div style={styles.left}>
         <form onSubmit={handleLogin} style={styles.form}>
           <h2 style={styles.title}>Login</h2>
+
           {error && <p style={styles.error}>{error}</p>}
+
           <input
             style={styles.input}
             name="email"
@@ -131,6 +121,7 @@ const Login = () => {
             value={form.email}
             required
           />
+
           <input
             style={styles.input}
             name="password"
@@ -140,14 +131,17 @@ const Login = () => {
             value={form.password}
             required
           />
+
           <button style={styles.button} type="submit" disabled={loading}>
             {loading ? "Logging in..." : "Login"}
           </button>
+
           <p style={styles.linkText}>
             Belum punya akun? <Link to="/register">Ayo buat</Link>
           </p>
         </form>
       </div>
+
       <div style={styles.right}></div>
     </div>
   );

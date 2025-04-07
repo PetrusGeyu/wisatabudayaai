@@ -1,6 +1,70 @@
 import { useState, useEffect } from "react";
 import API from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
+import bgImage from "../asset/bromo.jpg";
+
+const styles = {
+  wrapper: {
+    display: "flex",
+    height: "100vh",
+    fontFamily: "sans-serif",
+  },
+  left: {
+    flex: 1,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    padding: "20px",
+  },
+  right: {
+    flex: 1,
+    backgroundImage: `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url(${bgImage})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  },
+  form: {
+    width: "100%",
+    maxWidth: "400px",
+    padding: "30px",
+    borderRadius: "16px",
+    backgroundColor: "#fff",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+    display: "flex",
+    flexDirection: "column",
+    gap: "14px",
+  },
+  title: {
+    fontSize: "24px",
+    fontWeight: "bold",
+    marginBottom: "10px",
+    textAlign: "center",
+  },
+  input: {
+    padding: "10px",
+    border: "1px solid #ccc",
+    borderRadius: "6px",
+    fontSize: "14px",
+  },
+  button: {
+    padding: "10px",
+    backgroundColor: "#1a73e8",
+    color: "#fff",
+    fontWeight: "600",
+    border: "none",
+    borderRadius: "6px",
+    cursor: "pointer",
+  },
+  error: {
+    color: "red",
+    fontSize: "0.875rem",
+    textAlign: "left",
+  },
+  linkText: {
+    textAlign: "center",
+    fontSize: "14px",
+  },
+};
 
 const Register = () => {
   const navigate = useNavigate();
@@ -28,7 +92,6 @@ const Register = () => {
     e.preventDefault();
     setErrors({});
 
-    // Validasi manual
     if (!form.name || !form.email || !form.password || !form.checkPassword) {
       setErrors({ form: "Semua kolom harus diisi!" });
       return;
@@ -71,111 +134,68 @@ const Register = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <form onSubmit={handleRegister} style={styles.form}>
-        <h2 style={styles.title}>Daftar Akun</h2>
+    <div style={styles.wrapper}>
+      <div style={styles.left}>
+        <form onSubmit={handleRegister} style={styles.form}>
+          <h2 style={styles.title}>Sign Up</h2>
 
-        <input
-          name="name"
-          placeholder="Nama Lengkap"
-          type="text"
-          onChange={handleChange}
-          style={styles.input}
-          required
-        />
-        {errors.name && <p style={styles.error}>{errors.name}</p>}
+          <input
+            name="name"
+            placeholder="Name"
+            type="text"
+            onChange={handleChange}
+            style={styles.input}
+            required
+          />
+          {errors.name && <p style={styles.error}>{errors.name}</p>}
 
-        <input
-          name="email"
-          placeholder="Email"
-          type="email"
-          onChange={handleChange}
-          style={styles.input}
-          required
-        />
-        {errors.email && <p style={styles.error}>{errors.email}</p>}
+          <input
+            name="email"
+            placeholder="Email"
+            type="email"
+            onChange={handleChange}
+            style={styles.input}
+            required
+          />
+          {errors.email && <p style={styles.error}>{errors.email}</p>}
 
-        <input
-          name="password"
-          placeholder="Password"
-          type="password"
-          onChange={handleChange}
-          style={styles.input}
-          required
-        />
-        {errors.password && <p style={styles.error}>{errors.password}</p>}
+          <input
+            name="password"
+            placeholder="Password"
+            type="password"
+            onChange={handleChange}
+            style={styles.input}
+            required
+          />
+          {errors.password && <p style={styles.error}>{errors.password}</p>}
 
-        <input
-          name="checkPassword"
-          placeholder="Konfirmasi Password"
-          type="password"
-          onChange={handleChange}
-          style={styles.input}
-          required
-        />
-        {errors.checkPassword && (
-          <p style={styles.error}>{errors.checkPassword}</p>
-        )}
+          <input
+            name="checkPassword"
+            placeholder="Confirm Password"
+            type="password"
+            onChange={handleChange}
+            style={styles.input}
+            required
+          />
+          {errors.checkPassword && (
+            <p style={styles.error}>{errors.checkPassword}</p>
+          )}
 
-        {errors.form && <p style={styles.error}>{errors.form}</p>}
+          {errors.form && <p style={styles.error}>{errors.form}</p>}
 
-        <button type="submit" disabled={loading} style={styles.button}>
-          {loading ? "Loading..." : "Register"}
-        </button>
+          <button type="submit" disabled={loading} style={styles.button}>
+            {loading ? "Loading..." : "Sign up"}
+          </button>
 
-        <p style={styles.linkText}>
-          Sudah punya akun? <Link to="/login">Login di sini</Link>
-        </p>
-      </form>
+          <p style={styles.linkText}>
+            Already have an account? <Link to="/login">Login here</Link>
+          </p>
+        </form>
+      </div>
+
+      <div style={styles.right}></div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    display: "flex",
-    justifyContent: "center",
-    marginTop: "50px",
-  },
-  form: {
-    width: "100%",
-    maxWidth: "400px",
-    padding: "20px",
-    border: "1px solid #ccc",
-    borderRadius: "8px",
-    backgroundColor: "#fafafa",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-  },
-  title: {
-    textAlign: "center",
-    marginBottom: "20px",
-  },
-  input: {
-    width: "100%",
-    padding: "10px",
-    marginBottom: "10px",
-    borderRadius: "5px",
-    border: "1px solid #ccc",
-  },
-  button: {
-    width: "100%",
-    padding: "10px",
-    backgroundColor: "#4CAF50",
-    color: "white",
-    fontWeight: "bold",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-  },
-  error: {
-    color: "red",
-    fontSize: "0.875rem",
-    marginBottom: "10px",
-  },
-  linkText: {
-    textAlign: "center",
-    marginTop: "15px",
-  },
 };
 
 export default Register;
