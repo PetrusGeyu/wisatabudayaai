@@ -183,6 +183,11 @@ const Budaya = () => {
     return Array.from({ length: end - start + 1 }, (_, i) => start + i);
   };
 
+  const capitalizeWords = (str) => {
+    if (!str) return "";
+    return String(str).replace(/\b\w/g, (char) => char.toUpperCase());
+  };
+
   return (
     <div style={styles.container}>
       <h1 style={styles.heading}>Budaya</h1>
@@ -212,18 +217,18 @@ const Budaya = () => {
           <div style={styles.grid}>
             {currentItems.map((item, index) => (
               <div key={index} style={styles.card}>
-                <div style={styles.title}>{item.Budaya}</div>
+                <div style={styles.title}>{capitalizeWords(item.Budaya)}</div>
                 <div style={styles.detail}>
-                  <strong>Kota:</strong> {item.Kota}
+                  <strong>Kota:</strong> {capitalizeWords(item.Kota)}
                 </div>
                 <div style={styles.detail}>
-                  <strong>Jenis:</strong> {item.Jenis}
+                  <strong>Jenis:</strong> {capitalizeWords(item.Jenis)}
                 </div>
                 <div style={styles.detail}>
-                  <strong>Rating:</strong> {item.Rating} ⭐
+                  <strong>Rating:</strong> {capitalizeWords(item.Rating)} ⭐
                 </div>
                 <div style={styles.detail}>
-                  <strong>Deskripsi:</strong> {item.Deskripsi}
+                  <strong>Deskripsi:</strong> {capitalizeWords(item.Deskripsi)}
                 </div>
                 <button
                   style={styles.button}
