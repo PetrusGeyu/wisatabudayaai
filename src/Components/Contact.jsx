@@ -3,18 +3,18 @@ import { FaPhone, FaFax, FaEnvelope } from "react-icons/fa";
 
 const Contact = () => {
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center p-6">
-      <div className="max-w-5xl w-full bg-gray-800 text-white p-10 rounded-lg shadow-xl grid md:grid-cols-2 gap-10">
+    <div className="min-h-screen bg-gray-900 flex items-center justify-center p-6 rounded-lg">
+      <div className="max-w-7xl w-full bg-gray-800 text-white p-10 rounded-lg shadow-xl grid md:grid-cols-2 gap-10">
         {/* Formulir */}
         <div>
           <h2 className="text-4xl font-bold mb-4">Get in <span className="text-blue-400">Touch</span></h2>
           <p className="text-gray-400 mb-6">Hubungi kami untuk pertanyaan, saran, atau kerja sama!</p>
           <form className="space-y-4">
-            <input type="text" placeholder="Name *" className="w-full p-3 bg-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
-            <input type="email" placeholder="Email *" className="w-full p-3 bg-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
-            <input type="text" placeholder="Phone number *" className="w-full p-3 bg-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
-            <input type="text" placeholder="How did you find us?" className="w-full p-3 bg-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
-            <button className="w-full bg-blue-500 p-3 rounded text-white font-semibold hover:bg-blue-600 transition">SEND</button>
+            <input type="text" placeholder="Name *" className="w-full p-3 bg-gray-700 rounded-[24px] focus:outline-none focus:ring-2 focus:ring-blue-400" />
+            <input type="email" placeholder="Email *" className="w-full p-3 bg-gray-700 rounded-[24px] focus:outline-none focus:ring-2 focus:ring-blue-400" />
+            <input type="text" placeholder="Phone number *" className="w-full p-3 bg-gray-700 rounded-[24px] focus:outline-none focus:ring-2 focus:ring-blue-400" />
+            <input type="text" placeholder="How did you find us?" className="w-full p-3 bg-gray-700 rounded-[24px] focus:outline-none focus:ring-2 focus:ring-blue-400" />
+            <button className="w-full bg-blue-500 p-3 rounded-[24px] text-white font-semibold hover:bg-blue-600 transition">SEND</button>
           </form>
           <div className="flex items-center space-x-4 text-gray-300 mt-6">
             <FaPhone className="text-xl" /><span>+62 812 3456 7890</span>

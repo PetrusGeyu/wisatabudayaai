@@ -84,7 +84,7 @@ const Wisata = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    fetch("https://4faa-34-91-9-190.ngrok-free.app/rekomendasi", {
+    fetch("https://web-production-6737.up.railway.app/rekomendasi", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
