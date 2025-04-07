@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chatbot Budaya</title>
+    <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+    <style>
+      df-messenger {
+        --df-messenger-bot-message: #eceff1;
+        --df-messenger-button-titlebar-color: #673ab7;
+        --df-messenger-chat-background-color: #ffffff;
+        --df-messenger-font-color: #000000;
+        --df-messenger-send-icon: #673ab7;
+        --df-messenger-user-message: #dcf8c6;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Komponen chatbot -->
+    <df-messenger
+      intent="WELCOME"
+      chat-title="WisataBudaya Bot"
+      agent-id="ISI-DENGAN-AGENT-ID-KAMU"
+      language-code="id"
+    ></df-messenger>
+  </body>
+</html>

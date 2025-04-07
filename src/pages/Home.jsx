@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import Hero from "../Components/Hero";
 import Explore from "../Components/Explore";
 import Budaya from "../Components/Budaya";
-import Contact from '../Components/Contact'
+import Contact from "../Components/Contact";
 import About from "../Components/About";
+import ChatbotDialogflow from "../Components/DialogFlowChat";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -17,12 +18,15 @@ const Home = () => {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6 gap-2 flex-col">
-      <Hero/>
-      <Explore/>
-      <Budaya/>
-      <About/>
-     <Contact/>
+    <div className="min-h-screen bg-gray-100 flex flex-col gap-2 p-6">
+      <Hero />
+      <Explore />
+      <Budaya />
+      <About />
+      <Contact />
+      
+      {/* Chatbot akan muncul di pojok kanan bawah */}
+      <ChatbotDialogflow />
     </div>
   );
 };
