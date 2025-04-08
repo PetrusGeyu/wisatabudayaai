@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import API from "../services/api";
-
+import {Link } from "react-router-dom";
 const UserProfile = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -55,9 +55,11 @@ const UserProfile = () => {
           </div>
 
           <div className="flex gap-2 self-end md:self-start">
-            <button className="bg-green-500 text-white px-4 py-2 rounded-md text-sm hover:bg-green-600">
+            
+            <Link to={'/bookmark'}>
+            <button   className="bg-green-500 text-white px-4 py-2 rounded-md text-sm hover:bg-green-600">
               Bookmark
-            </button>
+            </button></Link>
             <button className="bg-blue-500 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-600">
               Edit
             </button>
