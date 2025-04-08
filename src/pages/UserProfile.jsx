@@ -40,7 +40,7 @@ const UserProfile = () => {
     <div className="min-h-screen bg-gray-50 px-4 py-8">
       <h1 className="text-4xl font-bold text-gray-800 mb-6">User Profile</h1>
 
-      <div className="bg-white border rounded-xl p-6 shadow-sm">
+      <div className="bg-white rounded-xl shadow-md p-6">
         <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
           <div className="flex items-center gap-4">
             <img
@@ -54,7 +54,7 @@ const UserProfile = () => {
             </div>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 self-end md:self-start">
             <button className="bg-green-500 text-white px-4 py-2 rounded-md text-sm hover:bg-green-600">
               Bookmark
             </button>
