@@ -4,14 +4,27 @@ import BatikDetector from "../batik-model/templates/BatikDetector";
 
 const ITEMS_PER_PAGE = 6;
 const kotaList = [
-  "Madura",
-  "Jombang",
-  "Semarang",
-  "Subang",
-  "Banyumas",
-  "Ponorogo",
-  "Surakarta",
+  "Banyuwangi",
+  "Tangerang",
+  "Denpasar",
+  "Sumenep",
+  "Tabanan",
   "Kuningan",
+  "Karangasem",
+  "Surakarta",
+  "Ponorogo",
+  "Cirebon",
+  "Ubud",
+  "Karawang",
+  "Semarang",
+  "Gianyar",
+  "Bantul",
+  "Bandung",
+  "Pamekasan",
+  "Yogyakarta",
+  "Jombang",
+  "Surabaya",
+  "Solo"
 ];
 
 const PEXELS_API_KEY = "cvokujzUUm6XhWqMltwgFWsbNuNreXgtt2QJRNi26FOX7QqDUUcVj3DX";
