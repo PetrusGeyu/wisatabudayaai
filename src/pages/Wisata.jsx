@@ -1,16 +1,26 @@
 import React, { useState, useEffect } from "react";
 
 const kotaList = [
-  "Bandung", "Makassar", "Yogyakarta", "Bali", "Aceh", "Surabaya", "Banjarmasin", "Jakarta",
+  "Bandung",
+  "Makassar",
+  "Yogyakarta",
+  "Bali",
+  "Aceh",
+  "Surabaya",
+  "Banjarmasin",
+  "Jakarta",
 ];
 
 const ITEMS_PER_PAGE = 6;
+const PEXELS_API_KEY =
+  "cvokujzUUm6XhWqMltwgFWsbNuNreXgtt2QJRNi26FOX7QqDUUcVj3DX";
 
 const Wisata = () => {
   const [data, setData] = useState([]);
   const [selectedKota, setSelectedKota] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [error, setError] = useState(null);
+  const [imageMap, setImageMap] = useState({});
 
   useEffect(() => {
     fetch("https://web-production-6737.up.railway.app/rekomendasi", {
@@ -20,9 +30,41 @@ const Wisata = () => {
         if (!res.ok) throw new Error("Gagal fetch data!");
         return res.json();
       })
-      .then((json) => setData(json))
+      .then(async (json) => {
+        setData(json);
+        const images = {};
+        for (const item of json) {
+          const name = item["Nama Tempat Wisata"];
+          console.log(`Mencari gambar untuk: ${name}`);
+          const image = await fetchImageFromPexels(name);
+          console.log(`Gambar untuk ${name}:`, image);
+          images[name] = image;
+        }
+        setImageMap(images);
+      })
       .catch(() => setError("Terjadi kesalahan saat mengambil data."));
   }, []);
+
+  const fetchImageFromPexels = async (query) => {
+    try {
+      const res = await fetch(
+        `https://api.pexels.com/v1/search?query=${encodeURIComponent(
+          query
+        )}&per_page=1`,
+        {
+          headers: {
+            Authorization: PEXELS_API_KEY,
+          },
+        }
+      );
+      const data = await res.json();
+      console.log("Data gambar dari Pexels:", data);
+      return data.photos[0]?.src?.medium || null;
+    } catch (err) {
+      console.error("Gagal ambil gambar dari Pexels:", err);
+      return null;
+    }
+  };
 
   const handleBookmark = async (item) => {
     const token = localStorage.getItem("token");
@@ -47,13 +89,18 @@ const Wisata = () => {
       if (!res.ok) throw new Error();
 
       alert("Berhasil ditambahkan ke bookmark!");
-      setData((prev) => prev.filter((d) => d["Nama Tempat Wisata"] !== item["Nama Tempat Wisata"]));
+      setData((prev) =>
+        prev.filter(
+          (d) => d["Nama Tempat Wisata"] !== item["Nama Tempat Wisata"]
+        )
+      );
     } catch {
-      // Fallback ke localStorage
-      const local = JSON.parse(localStorage.getItem("wisata_bookmarks") || "[]");
-    
+      const local = JSON.parse(
+        localStorage.getItem("wisata_bookmarks") || "[]"
+      );
+
       const localItem = {
-        id: Date.now(), // Buat ID unik
+        id: Date.now(),
         nama: item["Nama Tempat Wisata"],
         kota: item.Kota,
         jenis: item["Jenis Wisata"],
@@ -61,12 +108,11 @@ const Wisata = () => {
         deskripsi: item["Deskripsi Singkat"],
         user_id: "local",
       };
-    
+
       local.push(localItem);
       localStorage.setItem("wisata_bookmarks", JSON.stringify(local));
       alert("Disimpan secara lokal!");
     }
-    
   };
 
   const filteredData = data.filter((item) =>
@@ -114,12 +160,37 @@ const Wisata = () => {
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-4">
             {currentItems.map((item, index) => (
-              <div key={index} className="border p-4 rounded-lg bg-white shadow">
-                <h2 className="text-lg font-bold mb-2">{item["Nama Tempat Wisata"]}</h2>
-                <p className="text-sm mb-1"><strong>Kota:</strong> {item.Kota}</p>
-                <p className="text-sm mb-1"><strong>Jenis:</strong> {item["Jenis Wisata"]}</p>
-                <p className="text-sm mb-1"><strong>Rating:</strong> {item.Rating} ⭐</p>
-                <p className="text-sm mb-2"><strong>Deskripsi:</strong> {item["Deskripsi Singkat"]}</p>
+              <div
+                key={index}
+                className="border p-4 rounded-lg bg-white shadow"
+              >
+                {/* Check if the image URL exists */}
+                {imageMap[item["Nama Tempat Wisata"]] ? (
+                  <img
+                    src={imageMap[item["Nama Tempat Wisata"]]}
+                    alt={item["Nama Tempat Wisata"]}
+                    className="w-full h-40 object-cover mb-3 rounded"
+                  />
+                ) : (
+                  <div className="h-40 bg-gray-200 mb-3 rounded">
+                    Gambar tidak tersedia
+                  </div>
+                )}
+                <h2 className="text-lg font-bold mb-2">
+                  {item["Nama Tempat Wisata"]}
+                </h2>
+                <p className="text-sm mb-1">
+                  <strong>Kota:</strong> {item.Kota}
+                </p>
+                <p className="text-sm mb-1">
+                  <strong>Jenis:</strong> {item["Jenis Wisata"]}
+                </p>
+                <p className="text-sm mb-1">
+                  <strong>Rating:</strong> {item.Rating} ⭐
+                </p>
+                <p className="text-sm mb-2">
+                  <strong>Deskripsi:</strong> {item["Deskripsi Singkat"]}
+                </p>
                 <button
                   onClick={() => handleBookmark(item)}
                   className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
@@ -130,7 +201,6 @@ const Wisata = () => {
             ))}
           </div>
 
-          {/* Pagination */}
           <div className="flex justify-center gap-2 mt-6">
             {currentPage > 1 && (
               <button
@@ -145,7 +215,9 @@ const Wisata = () => {
                 key={page}
                 onClick={() => setCurrentPage(page)}
                 className={`px-3 py-1 border rounded ${
-                  page === currentPage ? "bg-blue-500 text-white" : "hover:bg-gray-100"
+                  page === currentPage
+                    ? "bg-blue-500 text-white"
+                    : "hover:bg-gray-100"
                 }`}
               >
                 {page}
