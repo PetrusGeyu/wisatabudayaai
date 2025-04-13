@@ -89,11 +89,6 @@ const Wisata = () => {
       if (!res.ok) throw new Error();
 
       alert("Berhasil ditambahkan ke bookmark!");
-      setData((prev) =>
-        prev.filter(
-          (d) => d["Nama Tempat Wisata"] !== item["Nama Tempat Wisata"]
-        )
-      );
     } catch {
       const local = JSON.parse(
         localStorage.getItem("wisata_bookmarks") || "[]"
@@ -113,6 +108,16 @@ const Wisata = () => {
       localStorage.setItem("wisata_bookmarks", JSON.stringify(local));
       alert("Disimpan secara lokal!");
     }
+
+    // Hapus dari daftar data dan imageMap setelah berhasil bookmark (baik lokal maupun server)
+    setData((prev) =>
+      prev.filter((d) => d["Nama Tempat Wisata"] !== item["Nama Tempat Wisata"])
+    );
+    setImageMap((prev) => {
+      const newMap = { ...prev };
+      delete newMap[item["Nama Tempat Wisata"]];
+      return newMap;
+    });
   };
 
   const filteredData = data.filter((item) =>
