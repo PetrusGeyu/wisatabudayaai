@@ -14,8 +14,7 @@ const kotaList = [
   "Kuningan",
 ];
 
-const PEXELS_API_KEY =
-  "cvokujzUUm6XhWqMltwgFWsbNuNreXgtt2QJRNi26FOX7QqDUUcVj3DX";
+const PEXELS_API_KEY = "cvokujzUUm6XhWqMltwgFWsbNuNreXgtt2QJRNi26FOX7QqDUUcVj3DX";
 
 const Budaya = () => {
   const [data, setData] = useState([]);
@@ -24,6 +23,7 @@ const Budaya = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null); // Menyimpan item yang dipilih untuk deteksi batik
   const [imageMap, setImageMap] = useState({});
 
   useEffect(() => {
@@ -75,9 +75,7 @@ const Budaya = () => {
       );
       const data = await res.json();
       console.log("Pexels Response:", data); // Menambahkan log untuk memeriksa respons
-      return (
-        data.photos[0]?.src?.medium || "https://via.placeholder.com/600x400"
-      ); // Gambar fallback jika tidak ditemukan
+      return data.photos[0]?.src?.medium || "https://via.placeholder.com/600x400"; // Gambar fallback jika tidak ditemukan
     } catch (err) {
       console.error("Gagal ambil gambar dari Pexels:", err);
       return "https://via.placeholder.com/600x400"; // Gambar fallback jika gagal mengambil gambar
@@ -188,7 +186,6 @@ const Budaya = () => {
                 Gambar tidak tersedia
               </div>
             )}
-
             <p className="text-sm mb-1">
               <strong>Kota:</strong> {capitalizeWords(item.Kota)}
             </p>
@@ -207,6 +204,8 @@ const Budaya = () => {
             >
               Bookmark
             </button>
+            {/* Tombol untuk membuka modal deteksi batik */}
+          
           </div>
         ))}
       </div>
@@ -245,19 +244,7 @@ const Budaya = () => {
       )}
 
       {/* Modal Deteksi Batik */}
-      {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <button
-              className="absolute top-2 right-2 text-xl font-bold"
-              onClick={() => setShowModal(false)}
-            >
-              &times;
-            </button>
-            <BatikDetector />
-          </div>
-        </div>
-      )}
+
     </div>
   );
 };
