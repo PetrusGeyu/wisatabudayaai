@@ -6,12 +6,14 @@ const BatikDetector = () => {
   const [loading, setLoading] = useState(false)
   const [model, setModel] = useState(null)
   const imageRef = useRef(null)
+  const imageFileRef = useRef(null)
 
+  // Memuat model TensorFlow.js sekali
   const loadModel = async () => {
     try {
       setLoading(true)
-      const response = await fetch('http://localhost:5000/predict') // path dari public
-      const loadedModel = await response.json()
+      await tf.ready()  // Menunggu TensorFlow siap
+      const loadedModel = await tf.loadLayersModel('http://192.168.18.22:5001/model.json')
       setModel(loadedModel)
       console.log('✅ Model berhasil dimuat.')
     } catch (error) {
@@ -22,6 +24,7 @@ const BatikDetector = () => {
     }
   }
 
+  // Mengubah gambar menjadi format tensor
   const handleImageChange = (e) => {
     const file = e.target.files?.[0]
     if (file) {
@@ -35,6 +38,7 @@ const BatikDetector = () => {
     }
   }
 
+  // Mengirim gambar ke server untuk prediksi
   const handlePredict = async () => {
     if (!model) {
       alert('Model belum dimuat. Klik tombol "Load Model" dulu.')
@@ -45,23 +49,32 @@ const BatikDetector = () => {
       return
     }
 
+    const formData = new FormData()
+    const file = imageFileRef.current.files[0]
+    formData.append('file', file)
+
     try {
       setLoading(true)
-      const tensor = tf.browser
-        .fromPixels(imageRef.current)
-        .resizeNearestNeighbor([224, 224])
-        .toFloat()
-        .div(255.0)
-        .expandDims()
 
-      const prediction = model.predict(tensor)
-      const predictionData = await prediction.data()
-      const maxIndex = predictionData.indexOf(Math.max(...predictionData))
+      const response = await fetch('http://192.168.18.22:5001/predict', {
+        method: 'POST',
+        body: formData,
+      })
 
-      // Ubah label sesuai dengan model kamu
-      const labels = ['Batik Kawung', 'Batik Parang', 'Batik Mega Mendung']
-      const label = labels[maxIndex] || 'Tidak dikenali'
-      setResult(`Jenis Batik: ${label} (Confidence: ${predictionData[maxIndex].toFixed(2)})`)
+      const predictionData = await response.json()
+
+      if (response.ok) {
+        const maxIndex = predictionData.predictions.findIndex(
+          (item) => item.probability === Math.max(...predictionData.predictions.map(p => p.probability))
+        )
+
+        const label = predictionData.predictions[maxIndex]?.label || 'Tidak dikenali'
+        const confidence = predictionData.predictions[maxIndex]?.confidence || '0%'
+
+        setResult(`Jenis Batik: ${label} (Confidence: ${confidence})`)
+      } else {
+        setResult('Terjadi kesalahan pada backend.')
+      }
     } catch (error) {
       console.error('❌ Gagal memprediksi:', error)
       setResult('Terjadi kesalahan saat prediksi.')
@@ -78,6 +91,7 @@ const BatikDetector = () => {
         type="file"
         accept="image/*"
         onChange={handleImageChange}
+        ref={imageFileRef}
         className="mb-4 block w-full"
       />
 

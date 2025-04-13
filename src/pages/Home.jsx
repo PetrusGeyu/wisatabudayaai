@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import Hero from "../Components/Hero";
 import Explore from "../Components/Explore";
 import Budaya from "../Components/Budaya";
@@ -8,14 +7,13 @@ import About from "../Components/About";
 import ChatbotDialogflow from "../Components/DialogFlowChat";
 
 const Home = () => {
-  const navigate = useNavigate();
+  // eslint-disable-next-line no-unused-vars
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (!token) {
-      navigate("/login");
-    }
-  }, [navigate]);
+    setIsLoggedIn(!!token);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col gap-2 p-6">
@@ -24,9 +22,12 @@ const Home = () => {
       <Budaya />
       <About />
       <Contact />
-      
-      {/* Chatbot akan muncul di pojok kanan bawah */}
+
+      {/* Chatbot tetap muncul di semua user */}
       <ChatbotDialogflow />
+
+      {/* Contoh: tampilkan info jika login */}
+      {/* {isLoggedIn && <p className="text-green-600 text-center mt-4">Selamat datang kembali!</p>} */}
     </div>
   );
 };

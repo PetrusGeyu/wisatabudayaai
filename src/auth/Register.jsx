@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { FiMail, FiUser, FiEye, FiEyeOff } from "react-icons/fi";
 import bgImage from "../asset/bromo.jpg";
-import API from "../services/api";
+import axios from "axios";
 
 const styles = {
   wrapper: {
@@ -111,7 +111,7 @@ const Register = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
     email: "",
-    username: "",
+    name: "",
     password: "",
     confirmPassword: "",
   });
@@ -140,9 +140,9 @@ const Register = () => {
     setLoading(true);
     setErrors({});
 
-    const { email, username, password, confirmPassword } = form;
+    const { email, name, password, confirmPassword } = form;
 
-    if (!email || !username || !password || !confirmPassword) {
+    if (!email || !name || !password || !confirmPassword) {
       setErrors({ form: "Semua kolom wajib diisi!" });
       setLoading(false);
       return;
@@ -161,7 +161,7 @@ const Register = () => {
     }
 
     try {
-      await API.post("/auth/register", { email, username, password });
+      await axios.post("http://localhost:3000/auth/register", { email, name, password });
       alert("Registrasi berhasil! Silakan login.");
       navigate("/login");
     } catch (err) {
@@ -195,12 +195,12 @@ const Register = () => {
 
             <div style={styles.inputGroup}>
               <input
-                name="username"
-                placeholder="Username"
+                name="name"
+                placeholder="Name"
                 type="text"
                 style={styles.input}
                 onChange={handleChange}
-                value={form.username}
+                value={form.name}
                 required
               />
               <FiUser style={styles.iconRight} />
@@ -244,11 +244,15 @@ const Register = () => {
             </button>
 
             <p style={styles.linkText}>
-              Sudah punya akun? <Link to="/login"
-              style={{ color: "#3b82f6", textDecoration: "none" }}
-              onMouseOver={(e) => (e.target.style.textDecoration = "underline")}
-              onMouseOut={(e) => (e.target.style.textDecoration = "none")}
-              >Login di sini</Link>
+              Sudah punya akun?{" "}
+              <Link
+                to="/login"
+                style={{ color: "#3b82f6", textDecoration: "none" }}
+                onMouseOver={(e) => (e.target.style.textDecoration = "underline")}
+                onMouseOut={(e) => (e.target.style.textDecoration = "none")}
+              >
+                Login di sini
+              </Link>
             </p>
           </form>
         </div>

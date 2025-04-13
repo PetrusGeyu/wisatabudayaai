@@ -1,38 +1,41 @@
-import React, { useEffect, useState } from "react";
-import API from "../services/api";
-import {Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
 const UserProfile = () => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [editMode, setEditMode] = useState(false);
+  const [form, setForm] = useState({});
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        console.error("Token tidak ditemukan");
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const res = await API.get("/user/me", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setUser(res.data);
-      } catch (err) {
-        console.error("Gagal mengambil data user:", err);
-      } finally {
-        setLoading(false);
-      }
+    const userData = {
+      name: localStorage.getItem("name"),
+      email: localStorage.getItem("email"),
+      username: localStorage.getItem("username"),
+      country: localStorage.getItem("country"),
     };
 
-    fetchUser();
+    if (userData.name && userData.email) {
+      setUser(userData);
+      setForm(userData); // Untuk form edit
+    }
   }, []);
 
-  if (loading)
-    return <p className="text-center mt-10 text-gray-500">Memuat data profil...</p>;
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSave = () => {
+    // Simpan ke localStorage
+    localStorage.setItem("name", form.name || "");
+    localStorage.setItem("email", form.email || "");
+    localStorage.setItem("username", form.username || "");
+    localStorage.setItem("country", form.country || "");
+
+    setUser(form); // Update tampilan
+    setEditMode(false);
+    alert("Data berhasil disimpan!");
+  };
+
   if (!user)
     return <p className="text-center mt-10 text-gray-500">Data user tidak ditemukan.</p>;
 
@@ -44,25 +47,37 @@ const UserProfile = () => {
         <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
           <div className="flex items-center gap-4">
             <img
-              src={`https://ui-avatars.com/api/?name=${user.name}&background=4F46E5&color=fff&size=128`}
+              src={`https://ui-avatars.com/api/?name=${form.name}&background=4F46E5&color=fff&size=128`}
               alt="Avatar"
               className="w-20 h-20 rounded-full"
             />
             <div>
-              <h2 className="text-lg font-semibold text-gray-800">{user.name}</h2>
-              <p className="text-sm text-gray-500">{user.email}</p>
+              <h2 className="text-lg font-semibold text-gray-800">{form.name}</h2>
+              <p className="text-sm text-gray-500">{form.email}</p>
             </div>
           </div>
 
           <div className="flex gap-2 self-end md:self-start">
-            
-            <Link to={'/bookmark'}>
-            <button   className="bg-green-500 text-white px-4 py-2 rounded-md text-sm hover:bg-green-600">
-              Bookmark
-            </button></Link>
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-600">
-              Edit
-            </button>
+            <Link to={"/bookmark"}>
+              <button className="bg-green-500 text-white px-4 py-2 rounded-md text-sm hover:bg-green-600">
+                Bookmark
+              </button>
+            </Link>
+            {editMode ? (
+              <button
+                onClick={handleSave}
+                className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700"
+              >
+                Simpan
+              </button>
+            ) : (
+              <button
+                onClick={() => setEditMode(true)}
+                className="bg-blue-500 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-600"
+              >
+                Edit
+              </button>
+            )}
           </div>
         </div>
 
@@ -71,40 +86,44 @@ const UserProfile = () => {
             <label className="text-sm text-gray-700 mb-1 block">Nama Lengkap</label>
             <input
               type="text"
-              disabled
-              placeholder="Your First Name"
+              name="name"
+              disabled={!editMode}
               className="w-full bg-gray-100 border border-gray-200 rounded-md px-3 py-2 text-sm"
-              value={user.fullName || ""}
+              value={form.name || ""}
+              onChange={handleChange}
             />
           </div>
           <div>
             <label className="text-sm text-gray-700 mb-1 block">Nama Pengguna</label>
             <input
               type="text"
-              disabled
-              placeholder="Your Nick Name"
+              name="username"
+              disabled={!editMode}
               className="w-full bg-gray-100 border border-gray-200 rounded-md px-3 py-2 text-sm"
-              value={user.username || ""}
+              value={form.username || ""}
+              onChange={handleChange}
             />
           </div>
           <div>
             <label className="text-sm text-gray-700 mb-1 block">Email</label>
             <input
               type="email"
-              disabled
-              placeholder="Your Email"
+              name="email"
+              disabled={!editMode}
               className="w-full bg-gray-100 border border-gray-200 rounded-md px-3 py-2 text-sm"
-              value={user.email || ""}
+              value={form.email || ""}
+              onChange={handleChange}
             />
           </div>
           <div>
             <label className="text-sm text-gray-700 mb-1 block">Wilayah</label>
             <input
               type="text"
-              disabled
-              placeholder="Your Country"
+              name="country"
+              disabled={!editMode}
               className="w-full bg-gray-100 border border-gray-200 rounded-md px-3 py-2 text-sm"
-              value={user.country || ""}
+              value={form.country || ""}
+              onChange={handleChange}
             />
           </div>
         </div>

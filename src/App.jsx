@@ -7,12 +7,11 @@ import {
 import Home from "./pages/Home";
 import Wisata from "./pages/Wisata";
 import Budaya from "./pages/Budaya";
-import Review from "./pages/Review";
 import Footer from "./Components/Footer";
 import NotFound from "./pages/NotFound";
 import Navbar from "./Components/Navbar";
 import Login from "./auth/Login";
-import Register from "./auth/register";
+import Register from "./auth/Register";
 import UserProfile from "./pages/UserProfile";
 import Bookmark from "./pages/Bookmark";
 
@@ -31,7 +30,6 @@ function Layout() {
           <Route path="/" element={<Home />} />
           <Route path="/wisata" element={<Wisata />} />
           <Route path="/budaya" element={<Budaya />} />
-          <Route path="/review" element={<Review />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/user" element={<UserProfile />} />
