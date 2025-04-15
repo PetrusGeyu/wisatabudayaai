@@ -5,7 +5,7 @@ import Kecak from '../asset/kecak.png'
 
 const Hero = () => {
   return (
-    <div className="max-w-6xl w-full flex flex-col md:flex-row items-center rounded-lg p-8 gap-12">
+    <div className="max-w-6xl w-full flex flex-col md:flex-row items-center rounded-lg p-12 ml-18 gap-12">
     {/* Left Section */}
     <div className="md:w-1/2 w-full text-center md:text-left">
       <h1 className="text-4xl font-extrabold text-blue-600">
