@@ -14,12 +14,7 @@ const Hero = () => {
       <p className="mt-4 text-gray-700 text-lg">
         WisataBudaya AI adalah platform berbasis kecerdasan buatan (AI) yang
         bertujuan untuk mengenalkan dan merekomendasikan wisata serta budaya
-        Indonesia secara lebih interaktif dan personal. Dengan memanfaatkan
-        teknologi Machine Learning dan Computer Vision, platform ini dapat
-        memberikan rekomendasi wisata budaya yang sesuai dengan preferensi
-        pengguna serta mengenali berbagai elemen budaya dari gambar atau
-        teks, seperti pakaian adat, kuliner khas, tarian tradisional, dan
-        artefak budaya.
+        Indonesia secara lebih interaktif dan personal.
       </p>
       <div className="mt-6">
         <input
